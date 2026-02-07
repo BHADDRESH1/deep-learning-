@@ -1,0 +1,11 @@
+__pycache__/
+*.pyc
+.DS_Store
+frontend/static/uploads/*
+!frontend/static/uploads/.gitkeep
+frontend/static/results/*
+!frontend/static/results/.gitkeep
+.env
+venv/
+.idea/
+.vscode/

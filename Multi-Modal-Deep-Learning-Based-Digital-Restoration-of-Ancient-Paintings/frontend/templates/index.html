@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multi-Modal Ancient Art Restoration</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Lato:wght@300;400;700&display=swap"
+        rel="stylesheet">
+    <script>
+        function showLoading() {
+            document.querySelector('.spinner-container').style.display = 'block';
+            document.querySelector('.results-section').style.opacity = '0.5';
+        }
+    </script>
+</head>
+
+<body>
+
+    <header>
+        <h1>Ancient Painting Restoration</h1>
+        <h3>Multi-Modal Deep Learning Based Digital Preservation</h3>
+    </header>
+
+    <div class="container">
+        <div class="intro-text">
+            <p>Experience the revival of cultural heritage. Our system leverages a <strong>Multi-Modal GAN</strong>
+                approach, analyzing RGB data and Structural Edge Maps to perform high-fidelity inpainting of damaged
+                ancient artworks.</p>
+        </div>
+
+        <div class="upload-card">
+            <form action="/" method="post" enctype="multipart/form-data" onsubmit="showLoading()">
+                <div class="file-input-wrapper">
+                    <label for="file-upload" class="custom-file-upload">
+                        Choose Painting Image
+                    </label>
+                    <input id="file-upload" type="file" name="file" accept="image/*" required
+                        onchange="document.querySelector('.custom-file-upload').textContent = this.files[0].name;">
+                </div>
+                <button type="submit" class="restore-btn">Restore Masterpiece</button>
+            </form>
+            <div class="spinner-container">
+                <div class="spinner"></div>
+                <p style="margin-top: 10px; color: #8D6E63;">Restoring details...</p>
+            </div>
+        </div>
+
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <div
+            style="color: #D32F2F; margin-bottom: 2rem; text-align: center; background: #FFEBEE; padding: 1rem; border-radius: 8px;">
+            {{ messages[0] }}
+        </div>
+        {% endif %}
+        {% endwith %}
+
+        {% if restored_image %}
+        <div class="results-section">
+            <div class="results-grid">
+                <div class="result-card">
+                    <div class="card-header">Original Artefact</div>
+                    <div class="image-container">
+                        <img src="{{ original_image }}" alt="Original Input">
+                    </div>
+                    <div class="card-footer">Damaged Input Image</div>
+                </div>
+
+                <div class="result-card">
+                    <div class="card-header">Structural Edge Map</div>
+                    <div class="image-container">
+                        <img src="{{ edge_map }}" alt="Edge Features">
+                    </div>
+                    <div class="card-footer">Extracted Canny Edge Modality</div>
+                </div>
+
+                <div class="result-card">
+                    <div class="card-header">Raw GAN Output</div>
+                    <div class="image-container">
+                        <img src="{{ restored_image }}" alt="Restored Output">
+                    </div>
+                    <div class="card-footer">Direct Model Inference</div>
+                </div>
+
+                {% if enhanced_image %}
+                <div class="result-card" style="border: 2px solid var(--secondary-color); transform: scale(1.02);">
+                    <div class="card-header">Final Restored Output</div>
+                    <div class="image-container">
+                        <img src="{{ enhanced_image }}" alt="Enhanced Output">
+                    </div>
+                    <div class="card-footer">Post-Processed (Contrast/Sharpness)</div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        {% endif %}
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Digital Heritage Restoration Project | Powered by Multi-Modal Deep Learning</p>
+    </footer>
+
+</body>
+
+</html>
